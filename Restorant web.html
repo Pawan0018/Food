@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurant</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+    <style>
+        body {
+            background-color:blueviolet;
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            margin: 0;
+            width: 100%;
+            height: 100vh;
+        }
+        .navbar {
+            background-color: rgba(53, 23, 56, 0.8); 
+        }
+        .navbar-brand {
+            margin-left: auto;
+        }
+        h1 {
+            text-align: center;
+            color: azure;
+            margin-top: 20px;
+        }
+        #a {
+            color: white;
+            font-size: large;
+            font-family: cursive;
+            justify-content: 10px;
+        }
+        #a:hover{
+            color: orangered;
+        }
+        span {
+            color: darkorange;
+        }
+        h3,h4 {
+            color: white;
+            font-size: large;
+            margin-top: 20px;
+        }
+        h2 {
+            color: white;
+            margin-top: 110px;
+        }
+        .maindiv {
+            display: flex;
+            flex-wrap: wrap;
+            margin-top: 110px;
+            padding: 10px;
+            text-align: center;
+        }
+        .maindiv img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+        .left, .right {
+            flex: 1;
+            min-width: 300px;
+        }
+        .print,#contact,#about {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            margin-top: 40px;
+            gap: 20px;
+           
+        }#contact{
+            margin-top: 140px;
+            padding-bottom: 30px;
+        }
+        #menu, #order {
+            width: 100%;
+            max-width: 500px;
+            border: solid 2px white;
+            background-color: transparent;
+            border-radius: 15px;
+            color: aquamarine;
+            padding: 15px;
+            margin-top: 100px;
+        }
+        #div1, #div2 {
+            color: white;
+        }
+        .order-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        .order-item input[type="number"] {
+            width: 60px;
+        }
+        
+        p,hr{
+            color: white;
+        }
+        #pawan{
+            text-align: center;
+        }
+        #contact,#m{
+            color: darkorange;
+
+        }
+        .order-item input[type="number"], .order-item input[type="checkbox"] {
+            margin: 5px 0;
+        }
+        .order-item input[type="number"] {
+            width: 100px;
+        }
+        #img{
+            margin-top: 40px;
+            margin-left: 40px;
+            width: 400px;
+        }
+        #b1{
+            background-color: khaki;
+        }
+       #b2{
+        background-color: green;
+       }
+       #m,#about{
+        margin-top: 40px;
+        padding-top: 160px;
+       }
+      
+       
+    </style>
+    <script>
+        function bill() {
+            var total = 0,
+                orderSummary = "";
+    
+            var items = [
+                {chkId: "chk1", qtyId: "q1", name: "Tea", price: 20},
+                {chkId: "chk2", qtyId: "q2", name: "Coffee", price: 50},
+                {chkId: "chk3", qtyId: "q3", name: "Pizza", price: 200},
+                {chkId: "chk4", qtyId: "q4", name: "Burger", price: 250},
+                {chkId: "chk5", qtyId: "q5", name: "Water", price: 20},
+                {chkId: "chk6", qtyId: "q6", name: "Water", price: 60},
+                {chkId: "chk7", qtyId: "q7", name: "Water", price: 80},
+                {chkId: "chk8", qtyId: "q8", name: "Water", price: 150}
+            ];
+    
+            items.forEach(function(item) {
+                var checkbox = document.getElementById(item.chkId);
+                var qtyInput = document.getElementById(item.qtyId);
+                var qty = parseInt(qtyInput.value);
+    
+                if (checkbox.checked && qty > 0) {
+                    orderSummary += "<li>" + item.name + " x " + qty + " = Rs. " + (qty * item.price) + "</li>";
+                    total += qty * item.price;
+                }
+            });
+    
+            if (orderSummary === "") {
+                orderSummary = "<li>No items ordered yet.</li>";
+            }
+    
+            document.getElementById("order").innerHTML = "<h1>Your Order:</h1><br><ul>" + orderSummary + "</ul><br>Total: Rs. " + total;
+            document.getElementById("order").style.color = "white";
+            document.getElementById("div2").innerHTML = "Total Bill: Rs. " + total;
+        }
+    
+        function printReceipt() {
+            var divContent = document.getElementById("order").innerHTML;
+            if (divContent) {
+                var printWindow = window.open('', '', 'height=400,width=600');
+                printWindow.document.write('<html><head><title>Receipt</title></head><body>');
+                printWindow.document.write('<h1>Food Bill</h1><hr>');
+                printWindow.document.write(divContent);
+                printWindow.document.write('</body></html>');
+                printWindow.document.close();
+                printWindow.print();
+            } else {
+                alert("Please place an order first");
+            }
+        }
+    
+        function clearAll() {
+            document.querySelector('form').reset();
+            document.getElementById("order").innerHTML = '<h1>Your Order Summary</h1><hr><div id="div2">Total Bill: Rs. 0.00</div>';
+        }
+        
+        document.addEventListener('DOMContentLoaded', function() {
+       
+            document.querySelectorAll('#menu input[type="checkbox"]').forEach(function(checkbox) {
+                checkbox.addEventListener('change', function() {
+                    var qtyInput = document.getElementById(this.id.replace('chk', 'q'));
+                    qtyInput.disabled = !this.checked;
+                    if (!this.checked) {
+                        qtyInput.value = 0;
+                    }
+                    bill();  
+                });
+            });
+    
+            document.querySelectorAll('#menu input[type="number"]').forEach(function(input) {
+                input.addEventListener('input', function() {
+                    bill();
+                });
+            });
+    
+            setActiveMenu();
+        });
+    
+        function setActiveMenu() {
+            var menuLinks = document.querySelectorAll('.navbar-nav .nav-link');
+            menuLinks.forEach(function(link) {
+                link.classList.remove('highlighted');
+            });
+    
+            var menuLink = document.querySelector('.navbar-nav .nav-link[href="#ordermenu"]');
+            if (menuLink) {
+                menuLink.classList.add('highlighted');
+            }
+        }
+    </script>
+    
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark px-3 fixed-top">
+        <div class="container-fluid">
+            <h1>Cafe-<span>Indora</span></h1><hr>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon bg-blue"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0 fs-5 text-center">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#" id="a">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#ordermenu" id="a">Menu</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#about" id="a">About-us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#Contact" id="a">Contact</a>
+                    </li>
+                   
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container maindiv">
+        <div class="row">
+            <div class="col-md-5 left">
+                <h2>`From Our Kitchen to Your <span id="b">Heart`</span></h2>
+                <h1>Cafe-<span>Indora</span></h1>
+                <h3>Crafted with Love, Served with Passion</h3>
+            </div>
+            <div class="col-md-6 right">
+                <img src="C:\Users\A\OneDrive\Desktop\food\Food\rs1.jpg "  id="img" alt="burger img">
+            </div>
+        </div>
+    </div>
+    <h1 id="m">Menu</h1>
+    <div class="container print" id="ordermenu">
+
+        <div id="menu">
+            <form>
+                <h1>Menu</h1>
+                <hr>
+                <ul id="menu-items"><div>
+                    <li class="order-item">
+                       
+                        <input type="checkbox" id="chk1">  Tea @Rs-20
+                        <input type="number" id="q1" min="0" disabled>
+                    </li>
+                    <li class="order-item">
+                        
+                        <input type="checkbox" id="chk2"> Coffee @Rs-50
+                        <input type="number" id="q2" min="0" disabled>
+                    </li>
+                    <li class="order-item">
+                        
+                        <input type="checkbox" id="chk3"> Pizza @Rs-200
+                        <input type="number" id="q3" min="0" disabled>
+                    </li>
+                    <li class="order-item">
+                       
+                        <input type="checkbox" id="chk4">  Burger @Rs-250
+                        <input type="number" id="q4" min="0" disabled>
+                    </li>
+                    <li class="order-item">
+                        
+                        <input type="checkbox" id="chk5"> Water @Rs-20
+                        <input type="number" id="q5" min="0" disabled>
+                    </li>
+                    <li class="order-item">
+                        
+                        <input type="checkbox" id="chk6"> Green Tea @Rs-60
+                        <input type="number" id="q6" min="0" disabled>
+                    </li>
+                    <li class="order-item">
+                        
+                        <input type="checkbox" id="chk7"> Chacolate Coffee @Rs-80
+                        <input type="number" id="q7" min="0" disabled>
+                    </li>
+                    <li class="order-item">
+                        
+                        <input type="checkbox" id="chk8"> Ice-cream @Rs-150
+                        <input type="number" id="q8" min="0" disabled>
+                    </li>
+                    
+                    
+                    <input type="button" id="b1" value="Order Place Here" onclick="bill()">
+                    <input type="button"id="b1" value="Clear All" onclick="clearAll()">
+                    <input type="button" id="b2"value="Print Receipt" onclick="printReceipt()">
+                </ul>
+                <div id="div1"></div>
+            </form>
+        </div>
+        <div id="order">
+            <h1>Your Order Summary</h1>
+            <hr>
+            <div id="div2">Total Bill: Rs. 0.00</div>
+        </div>
+    </div>
+    <section class="About-us my-5" id="about">
+        <div class="container">
+          <div class="text-center my-4">
+          <h1>About-<span>us</span></h1>
+          <hr  class="w-25 m-auto">
+          </div>
+          <div class="row">
+            <div class="col-sm-12 col-md-6 col-lg-6 col-12">
+              <h1 class="p-2 text-center">Who <span>we are.</span></h1>
+              <p class="p-2" id="c"> <h4><span>CHEF</span>-CRAFTED FAST <span>FOOD</span> FOR THE FUTURE.</h4>
+                <p>Cafe-indora is dedicated to serving the best food on the planet, and for the planet!</p>
+            </div>
+
+            <div class="col-sm-12 col-md-6 col-lg-6 col-12">
+              <h1 class="p-2 text-center"><span>Cafe-</span>indora</h1>
+              <p class="p-2">"At Cafe Indora, we believe that every moment spent here should be a memorable one. From the moment you walk through our doors, you’re greeted with the rich aroma of freshly brewed coffee and the cozy ambiance of a space designed to be your retreat from the hustle and bustle of daily life. Whether you’re catching up with friends, working on your latest project, or simply enjoying a quiet moment alone, our selection of handcrafted beverages and gourmet treats is sure to elevate your experience. Discover the perfect blend of comfort and sophistication at Cafe Indora."</p>
+            </div>
+
+          </div>
+        </div>
+      
+
+</section>
+<section class="Contact my-5" id="Contact">
+    <div class="container">
+      <div class="text-center my-6">
+      <h1 id="contact">Contact</h1>
+      <hr  class="w-25 m-auto">
+      </div>
+      <div class="row">
+    <p id="pawan">We’d love to hear from you! Whether you have questions, feedback, or just want to say hello, feel free to reach out to us.
+
+     Cafe Indora<br>
+     123 Main Street,<br>
+     Pune, Maharastra, 411033 .<br><br>
+
+     Phone: (123) 456-7890<br>
+     Email: contact@cafeindora.com<br>
+
+     Business Hours:><br>
+     Monday - Friday: 8:00 AM - 8:00 PM<br>
+     Saturday - Sunday: 9:00 AM - 10:00 PM<br>
+
+     Follow Us on Social Media:<br>
+     Facebook | Instagram | Twitter</p>
+       
+      </div>
+    </div>
+  
+
+</section>
+
+    
+</body>
+</html>
